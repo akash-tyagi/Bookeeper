@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  .page-header
+    h1 Template Page
+    
+  .row
+    .span3
+      ul(class="nav nav-list well")
+        li(class="nav-header")
+          |Functions Available
+        li testing
+    .span9
+      table(class="table table-striped table-bordered")
+        thead
+          tr
+            th(class="span2") Name
+            th(class="span7") Text
+        tbody
+          tr(ng-repeat="msg in messages")
+            td(class="span2" ng-bind="msg.name") 1
+            td(class="span7" ng-bind="msg.text") 2
+      .row.controls
+        form
+          .span2
+            input(type="text" class="input-block-level" placeholder="Your Name")
+          .span7
+            input(type="text" class="span6 input-block-level" placeholder="Your Name")
+            input(type="submit" class="span1 btn btn-primary" value="Send" ng-disabled="!text")

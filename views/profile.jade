@@ -1,0 +1,33 @@
+extends layout
+
+block content
+  .page-header
+    h1 Profile Page
+    
+  .row
+    .span3
+      ul(class="nav nav-list well")
+        li(class="nav-header")
+          |Options
+        li
+          a(href="/users/"+user.id+"/books/") Books Read
+          a(href="/users/"+user.id+"/books/unread") Books Unread
+
+    .span9
+      table(class="table table-striped table-bordered")
+        thead
+          tr
+            th(class="span2") Name
+            th(class="span7") Username
+        tbody
+          tr
+            td(class="span2") #{user.name}
+            td(class="span7") #{user.username}
+              user.username
+      .row.controls
+        form
+          .span2
+            input(type="text" class="input-block-level" placeholder="Your Name")
+          .span7
+            input(type="text" class="span6 input-block-level" placeholder="Your Name")
+            input(type="submit" class="span1 btn btn-primary" value="Send" ng-disabled="!text")

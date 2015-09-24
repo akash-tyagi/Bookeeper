@@ -1,0 +1,16 @@
+doctype html
+html
+  head
+    title= Bookeeper
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    link(rel='stylesheet', href='/stylesheets/bootstrap-responsive.min.css')
+    style
+       | body { padding-top:60px }
+  body
+    div(class="container", ng-controller="BookController")
+      .navbar.navbar-fixed-top.navbar-inverse
+        .navbar-inner
+          .pull-right
+            a(href='https://c9.io', class='brand') Bookeeper
+    
+      block content 
