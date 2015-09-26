@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  .page-header
+    h1 Update Profile Info
+    
+  .row
+    .span2
+      ul(class="nav nav-list well")
+        li(class="nav-header")
+          |Cover Pic
+        li
+          img(src="/images/profilePic.jpg" alt="User Image" class="img-rounded")
+
+      include ./sidebar.jade
+    .span2
+      div
+    .span4
+      form(action='/update', method='post', enctype="multipart/form-data")
+        .formgroup
+          label Name
+          input(type="text" name="name" value = "#{user.name}")
+        .formgroup
+          label Email
+          input(type="text" name="email" value = "#{user.email}")
+        .formgroup
+            label Upload Profile Picture
+            input(type="file" name="profilePic")
+        .actions
+          input(type="submit" value="Update" class="btn btn-success")

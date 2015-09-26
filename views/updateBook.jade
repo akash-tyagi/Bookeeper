@@ -1,0 +1,44 @@
+extends layout
+
+block content
+  .page-header
+    h1 Update Book Info
+    
+  .row
+    .span2
+      ul(class="nav nav-list well")
+        li(class="nav-header")
+          |Book Cover Pic
+        li
+          img(src="#{book.limage}" alt="Book Image" class="img-rounded")
+
+      include ./sidebar.jade
+    .span2
+      div
+    .span4
+      form(action='/books/#{book.id}/update', method='post')
+        .formgroup
+          label Title
+          input(type="text" name="title" value = "#{book.title}")
+        .formgroup
+          label Author
+          input(type="text" name="author" value = "#{book.author}")
+        .formgroup
+          label Publishing Year
+          input(type="text" name="published" value = "#{book.published}")
+        .formgroup
+          label Publisher
+          input(type="text" name="publisher" value = "#{book.publisher}")
+        .formgroup
+          label Status
+          select(name="status")
+            option(value="0") Unread
+            option(value="1") Currently Reading
+            option(value="2") Already Read
+        .actions
+          input(type="submit" value="Update" class="btn btn-success")
+    .span3
+      h4 Delete Book
+      form(action='/books/#{book.id}/delete', method='post')
+        .actions
+          input(type="submit" value="Delete" class="btn btn-danger")

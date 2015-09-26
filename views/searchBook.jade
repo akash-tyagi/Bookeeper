@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  .page-header
+    h1 Search Book 
+    
+  .row
+    .span2
+      include ./sidebar.jade
+         
+    .span10
+    
+      form(action='/books/search', method='post')
+        .formgroup
+          label Title
+          input(type="text" name="title" value = "" placeholder="Search in title")
+        .formgroup
+          label Author
+          input(type="text" name="author" value ="" placeholder="Search in author name")
+        .formgroup
+          label Publishing Year
+          input(type="text" name="published" value = "" placeholder="Search year")
+        .formgroup
+          label Publisher
+          input(type="text" name="publisher" value = "" placeholder="Search in publisher name")
+        .actions
+          input(type="submit" value="Search" class="btn btn-default btn-success")

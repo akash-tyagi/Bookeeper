@@ -2,28 +2,35 @@ extends layout
 
 block content
   .page-header
-    h1 Template Page
+    h1 User Profile
     
   .row
-    .span3
+    .span2
       ul(class="nav nav-list well")
         li(class="nav-header")
-          |Functions Available
-        li testing
-    .span9
+          |Cover Pic
+        li
+          img(src="images/profilePic.jpg" alt="Profile Image" class="img-rounded")
+      
+      include ./sidebar.jade
+    .span10
       table(class="table table-striped table-bordered")
         thead
           tr
-            th(class="span2") Name
-            th(class="span7") Text
+            th Name
+            th Email
+            th Total Read
+            th Currenlty Reading
+            th Need To Read
+            th Option
         tbody
-          tr(ng-repeat="msg in messages")
-            td(class="span2" ng-bind="msg.name") 1
-            td(class="span7" ng-bind="msg.text") 2
-      .row.controls
-        form
-          .span2
-            input(type="text" class="input-block-level" placeholder="Your Name")
-          .span7
-            input(type="text" class="span6 input-block-level" placeholder="Your Name")
-            input(type="submit" class="span1 btn btn-primary" value="Send" ng-disabled="!text")
+          tr
+            td #{user.name}
+            td #{user.email}
+            td #{totalRead}
+            td #{currentlyReading}
+            td #{toRead}
+            td 
+             a(class="btn btn-info" href="/update" role="button") Update Profile
+              
+                

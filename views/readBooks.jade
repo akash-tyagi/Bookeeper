@@ -5,31 +5,35 @@ block content
     h1 #{title}
     
   .row
-    .span3
-      ul(class="nav nav-list well")
-        li(class="nav-header")
-          |Options
-        li
-          a(href="/users/"+id+"/books/") Books Read
-          a(href="/users/"+id+"/books/unread") Books To Read
-
-    .span9
-      table(class="table table-striped table-bordered")
+    .span2
+      include ./sidebar.jade
+    .span10
+      table(class="table table-striped table-bordered" id="books")
         thead
           tr
-            th(class="span2") Book Name
-            th(class="span7") Published
-            th(class="span1") Option
+            th Book ID
+            th Name
+            th author
+            th Published
+            th publisher
+            th Option
         tbody
           for book in books
             tr
-              td(class="span2") #{book.name}
-              td(class="span6") #{book.published}
-              td(class="span1")
-                if read
-                  a(class="btn btn-danger" href="#" role="button") Delete
-                else
-                  a(class="btn btn-success" href="#" role="button") Details
-                  
-
-                  
+              td #{book.id}
+              td #{book.title}
+              td #{book.author}
+              td #{book.published}
+              td #{book.publisher}
+              td
+                a(class="btn btn-success" href="/books/#{book.id}" role="button") Details
+      nav 
+        ul(class="pager")
+          li(class="previous")
+            a(href="")
+              span(aria-hidden="true") &larr;
+              |Previous
+          li(class="next")
+            a(href="")
+              span(aria-hidden="true") &rarr;
+              |Next            
