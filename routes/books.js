@@ -30,7 +30,7 @@ router.get('/update', function(req, res, next) {
 });
 
 router.post('/update', function(req, res, next) {
-  console.log(req.body.name);
+  console.log(req.body);
   console.log(req.body.email);
   res.redirect('/update');
 });
