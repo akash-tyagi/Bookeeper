@@ -30,6 +30,7 @@ router.get('/update', function(req, res, next) {
 });
 
 router.post('/update', function(req, res, next) {
+  console.log('$$$$$$$$$$$$$$$')
   console.log(req.body);
   console.log(req.body.email);
   res.redirect('/update');
@@ -47,13 +48,13 @@ router.post('/books/search', function(req, res, next) {
     sql += "title LIKE '%"+req.body.title+"%' "
     inserts.push(req.body.title);
   }
-  if(req.body.author){
-    sql += "author LIKE '%"+req.body.author+"%' "
-    inserts.push(req.body.author);
+  if(req.body.authorid){
+    sql += "authorid = '"+req.body.authorid+"' "
+    inserts.push(req.body.authorid);
   }
-  if(req.body.publisher){
-    sql += "publisher LIKE '%"+req.body.publisher+"%' "
-    inserts.push(req.body.publisher);
+  if(req.body.publisherid){
+    sql += "publisherid = '"+req.body.publisherid+"' "
+    inserts.push(req.body.publisherid);
   }
   if(req.body.published){
     sql += "published ="+req.body.published+" "
@@ -147,8 +148,8 @@ router.get('/books/:id/update', function(req, res, next) {
 
 
 router.post('/books/:id/update', function(req, res, next) {
-  var sql = "UPDATE books SET title=?, author=?, published=?, publisher=?, status=? where id=?";
-  var inserts = [req.body.title, req.body.author, req.body.published, req.body.publisher, req.body.status, req.params.id];
+  var sql = "UPDATE books SET title=?, authorid=?, published=?, publisherid=?, status=? where id=?";
+  var inserts = [req.body.title, req.body.authorid, req.body.published, req.body.publisherid, req.body.status, req.params.id];
   sql = mysql.format(sql, inserts);
   console.log("Executing Query:"+sql)
   connection.query(sql, function(err,results,fields){

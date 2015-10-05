@@ -18,17 +18,17 @@ block content
         thead
           tr
             th Title
-            th Author
+            th AuthorId
             th Publishing Year
-            th Publisher
+            th PublisherId
             th Status
             th Option
         tbody
           tr
             td #{book.title}
-            td #{book.author}
+            td #{book.authorid}
             td #{book.published}
-            td #{book.publisher}
+            td #{book.publisherid}
             td
               if book.status == 0
                 |Unread
