@@ -3,25 +3,25 @@ extends layout
 block content
   .page-header
     h1 Search Book 
-    
   .row
     .span2
       include ./sidebar.jade
          
     .span10
     
-      form(action='/books/search', method='post')
+      form(action='/books/search', method='post', id='bookSearch')
         .formgroup
           label Title
           input(type="text" name="title" value = "" placeholder="Search in title")
         .formgroup
           label Author
-          input(type="text" name="authorid" value ="" placeholder="Search in author name")
+          input(type="text" name="authorname" value ="" placeholder="Search in author name")
         .formgroup
-          label Publishing Year
-          input(type="text" name="published" value = "" placeholder="Search year")
+          label Publishing Year/ Published Between
+          input(type="text" name="start" value = "" placeholder="Publishing year/Start year")
+          input(type="text" name="end" value = "" placeholder="End year")
         .formgroup
           label Publisher
-          input(type="text" name="publisherid" value = "" placeholder="Search in publisher name")
+          input(type="text" name="publishername" value = "" placeholder="Search in publisher name")
         .actions
           input(type="submit" value="Search" class="btn btn-default btn-success")

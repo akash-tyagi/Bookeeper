@@ -3,6 +3,9 @@ var router = express.Router();
 var connection = require('../connection');
 var mysql = require('mysql');
 
+var bookQuery = "SELECT b.id as id, title, a.name author, published, p.name publisher, authorid, publisherid,"+
+   "status, limage FROM books b,authors a, publishers p WHERE b.authorid=a.id and b.publisherid = p.id "
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   var sql1 = "Select * from user;";
@@ -30,10 +33,16 @@ router.get('/update', function(req, res, next) {
 });
 
 router.post('/update', function(req, res, next) {
-  console.log('$$$$$$$$$$$$$$$')
-  console.log(req.body);
-  console.log(req.body.email);
-  res.redirect('/update');
+  var sql = "UPDATE user SET name=?, email=?;";
+  var inserts = [req.body.name, req.body.email];
+  sql = mysql.format(sql, inserts);
+  console.log('Running Query:'+ sql)
+  connection.query(sql, function(err,results,fields){
+      if(err) {
+        console.log('Error getting data from table!!!'+err);
+      }
+    res.redirect('/');
+  });
 });
 
 
@@ -42,25 +51,28 @@ router.get('/books/search', function(req, res, next) {
 });
 
 router.post('/books/search', function(req, res, next) {
-  var sql = "Select * FROM books WHERE ";
-  var inserts = [];
+  var sql = "Select * FROM books WHERE 1 ";
   if(req.body.title) {
+    sql += 'and '
     sql += "title LIKE '%"+req.body.title+"%' "
-    inserts.push(req.body.title);
   }
-  if(req.body.authorid){
-    sql += "authorid = '"+req.body.authorid+"' "
-    inserts.push(req.body.authorid);
+  if(req.body.authorname){
+    sql += 'and '
+    sql += "authorid in (SELECT id from authors where name LIKE '%"+
+      req.body.authorname+"%') "
   }
-  if(req.body.publisherid){
-    sql += "publisherid = '"+req.body.publisherid+"' "
-    inserts.push(req.body.publisherid);
+  if(req.body.publishername){
+    sql += 'and '
+    sql += "publisherid in (SELECT id from publishers where name LIKE '%"+
+      req.body.publishername+"%') "
   }
-  if(req.body.published){
-    sql += "published ="+req.body.published+" "
-    inserts.push(req.body.published);
+  if(req.body.start && req.body.end){
+    sql += 'and '
+    sql += "published BETWEEN "+req.body.start+" and "+req.body.end
+  } else if(req.body.start) {
+    sql += 'and '
+    sql += "published ="+req.body.start
   }
-  sql = mysql.format(sql, inserts);
   console.log("Executing Query:"+sql)
   connection.query(sql, function(err,results,fields){
       if(err) {
@@ -124,11 +136,12 @@ router.get('/books/unread', function(req, res, next) {
 
 
 router.get('/books/:id', function(req, res, next) {
-  connection.query("SELECT * from books where id=?",[req.params.id],
+  connection.query(bookQuery + 'and b.id=?',[req.params.id],
     function(err,results,fields){
       if(err) {
         console.log('Error getting data from table!!!');
       }
+      console.log(results[0])
       res.render('bookProfile',{book:results[0]})
     })
 });

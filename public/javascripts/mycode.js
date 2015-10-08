@@ -9,4 +9,23 @@ $(document).ready(function() {
         $('li.next a').attr("href", "/books/"+type+"?lastID="+lastID)
         $('li.previous a').attr("href", "/books/"+type+"?firstID="+firstID)
     }
+
+    $( "#bookSearch" ).submit(function( event ) {
+        if ($("#bookSearch [name=end]").val() != '' && 
+            $("#bookSearch [name=start]").val() == ''){
+                alert( "Please provide start year for using range." );
+                return false
+            }
+        var end = $("#bookSearch [name=end]").val();
+        if (end != '' && $.isNumeric(end) != true){
+                alert( "Please enter numeric value for END YEAR." );
+                return false
+            }
+        var start = $("#bookSearch [name=start]").val();
+        if (start != '' && $.isNumeric(start) != true){
+                alert( "Please enter numeric value for START YEAR." );
+                return false
+            }
+        return true;
+    });
 });

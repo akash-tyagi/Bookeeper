@@ -18,17 +18,19 @@ block content
         thead
           tr
             th Title
-            th AuthorId
+            th Author
             th Publishing Year
-            th PublisherId
+            th Publisher
             th Status
             th Option
         tbody
           tr
             td #{book.title}
-            td #{book.authorid}
+            td 
+              a(href="/author/#{book.authorid}") #{book.author}
             td #{book.published}
-            td #{book.publisherid}
+            td 
+              a(href="/publisher/#{book.publisherid}") #{book.publisher}
             td
               if book.status == 0
                 |Unread

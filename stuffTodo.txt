@@ -1,1 +1,7 @@
 1. Update profile not workin 
+2. Show Author and Publisher name -- done 
+3. Show author and publisher pages -- done
+4. Improve book search
+5. Author and Publisher search
+6. Create indexes on the tables
+7. Generate the query execution time befor and after indexing
