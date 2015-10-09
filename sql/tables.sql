@@ -6,8 +6,6 @@ CREATE TABLE `books` (
   `published` int unsigned default NULL,
   `publisherid` int default NULL,
   `status` int default 0,
-  `simage` varchar(255) binary default NULL,
-  `mimage` varchar(255) binary default NULL,
   `limage` varchar(255) binary default NULL,
   PRIMARY KEY  (`ISBN`),
   FOREIGN KEY (`authorid`) REFERENCES authors(`id`),
@@ -23,11 +21,13 @@ CREATE TABLE `user` (
 CREATE TABLE `publishers` (
     `id` int NOT NULL AUTO_INCREMENT,
     `name` varchar(50) default NULL,
-    PRIMARY KEY  (`id`)
+    PRIMARY KEY  (`id`),
+    UNIQUE (`name`)
 );
 
 CREATE TABLE `authors` (
     `id` int NOT NULL AUTO_INCREMENT,
     `name` varchar(50) default NULL,
-    PRIMARY KEY  (`id`)
+    PRIMARY KEY  (`id`),
+    UNIQUE (`name`)
 );

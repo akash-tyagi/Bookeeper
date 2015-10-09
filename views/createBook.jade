@@ -1,0 +1,39 @@
+extends layout
+
+block content
+  .page-header
+    h1 Create Book
+    
+  .row
+    .span2
+      include ./sidebar.jade
+    .span2
+      div
+    .span4
+      form(action='/books/create', method='post')
+        .formgroup
+          label Title
+          input(type="text" name="title" value = "" required)
+        .formgroup
+          label Author
+          input(type="text" name="authorname" value = "" required)
+        .formgroup
+          label Publishing Year
+          input(type="text" name="published" value = "" required)
+        .formgroup
+          label Publisher
+          input(type="text" name="publishername" value = "" required)
+        .formgroup
+          label ISBN
+          input(type="text" name="isbn" value = "" required)
+        .formgroup
+          label Cover Image Link
+          input(type="text" name="limage" value = "")
+        .formgroup
+          label Status
+          select(name="status")
+            option(value="0") Unread
+            option(value="1") Currently Reading
+            option(value="2") Already Read
+        .actions
+          input(type="submit" value="Create" class="btn btn-success")

@@ -1,7 +1,10 @@
-1. Update profile not workin 
+1. Update profile --done
 2. Show Author and Publisher name -- done 
 3. Show author and publisher pages -- done
-4. Improve book search
+4. Improve book search-- done
+
+create book, author and publisher
 5. Author and Publisher search
 6. Create indexes on the tables
 7. Generate the query execution time befor and after indexing
+8. Favourite author and publisher
