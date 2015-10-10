@@ -19,9 +19,9 @@ block content
       form(action='/update', method='post')
         .formgroup
           label Name
-          input(type="text" name="name" value = "#{user.name}")
+          input(type="text" name="name" value = "#{user.name}" required)
         .formgroup
           label Email
-          input(type="text" name="email" value = "#{user.email}")
+          input(type="text" name="email" value = "#{user.email}" required)
         .actions
           input(type="submit" value="Update" class="btn btn-success")

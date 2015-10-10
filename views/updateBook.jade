@@ -19,19 +19,19 @@ block content
       form(action='/books/#{book.id}/update', method='post', id='updateBook')
         .formgroup
           label Title
-          input(type="text" name="title" value = "#{book.title}")
+          input(type="text" name="title" value = "#{book.title}" required)
         .formgroup
           label Author
-          input(type="text" name="authorname" value = "#{book.author}")
+          input(type="text" name="authorname" value = "#{book.author}" required)
         .formgroup
           label ISBN
-          input(type="text" name="isbn" value = "#{book.ISBN}")
+          input(type="text" name="isbn" value = "#{book.ISBN}" required)
         .formgroup
           label Publishing Year
-          input(type="text" name="published" value = "#{book.published}")
+          input(type="text" name="published" value = "#{book.published}" required)
         .formgroup
           label Publisher
-          input(type="text" name="publishername" value = "#{book.publisher}")
+          input(type="text" name="publishername" value = "#{book.publisher}" required)
         .formgroup
           label Status
           select(name="status" value='#{book.status}' id='status')

@@ -10,125 +10,124 @@ router.get('/books/create', function(req, res, next) {
 
 router.post('/books/create', function(req, res, next) {
   console.log('Render Create Page2')
-  req.redirect('/books/search');
-  // var newAuthor,newPublisher,newBook;
-  // var sql1 = "SELECT * FROM authors where name=?;";
-  // var inserts = [req.body.authorname];
-  // sql1 = mysql.format(sql1, inserts);
+  var newAuthor,newPublisher,newBook;
+  var sql1 = "SELECT * FROM authors where name=?;";
+  var inserts = [req.body.authorname];
+  sql1 = mysql.format(sql1, inserts);
   
-  // var sql2 = "SELECT * FROM publishers where name=?;";
-  // inserts = [req.body.publishername];
-  // sql2 = mysql.format(sql2, inserts);
+  var sql2 = "SELECT * FROM publishers where name=?;";
+  inserts = [req.body.publishername];
+  sql2 = mysql.format(sql2, inserts);
   
-  // var sql3 = "SELECT * FROM books where title=?;";
-  // inserts = [req.body.title];
-  // sql3 = mysql.format(sql3, inserts);
+  var sql3 = "SELECT * FROM books where title=?;";
+  inserts = [req.body.title];
+  sql3 = mysql.format(sql3, inserts);
   
-  // console.log('Executing Query:'+sql1+sql2+sql3);
-  // connection.query(sql1+sql2+sql3, function(err,results,fields){
-  //     if(err) {
-  //       console.log('Error getting data from table!!!'+err);
-  //     }
-  //     console.log(results[0][0])
-  //     console.log(results[1][0])
-  //     console.log(results[2][0])
-  //     if (results[2][0] != undefined) {
-  //       console.log('Book Already Exists')
-  //       res.redirect('/books/'+results[2][0].id);
-  //     } else {
-  //       newBook = true;
-  //     }
-  //     if (results[0][0] == undefined) {
-  //       console.log('Author doesnt exist')
-  //       newAuthor = true;
-  //     } else {
-  //       req.body.authorid = results[0][0].id
-  //     }
-  //     if (results[1][0] == undefined) {
-  //       console.log('Publisher doesnt exist');
-  //       newPublisher = true;
-  //     } else {
-  //       req.body.publisherid = results[1][0].id
-  //     }
-  //     if (newBook) {
-  //       console.log('Creating new Book');
-  //       connection.beginTransaction(function(err) {
-  //         if (err) { 
-  //           console.log('error starting Transaction');
-  //           throw err; 
-  //         }
-  //         console.log('Starting Transaction');
-  //         sql1 = 'INSERT INTO authors (`name`) VALUES (?);'
-  //         inserts = [req.body.authorname];
-  //         sql1 = mysql.format(sql1, inserts);
-  //         sql2 = 'INSERT INTO publishers (`name`) VALUES (?);'
-  //         inserts = [req.body.publishername];
-  //         sql2 = mysql.format(sql2, inserts);
-  //         sql3 = 'INSERT INTO books (ISBN, title, authorid, published, publisherid, status, limage) '+
-  //           'VALUES (?,?,?,?,?,?,?);'
-  //         var sql= '';
-  //         if(newAuthor)
-  //           sql += sql1;
-  //         if (newPublisher)
-  //           sql += sql2;
+  console.log('Executing Query:'+sql1+sql2+sql3);
+  connection.query(sql1+sql2+sql3, function(err,results,fields){
+      if(err) {
+        console.log('Error getting data from table!!!'+err);
+      }
+      console.log(results[0][0])
+      console.log(results[1][0])
+      console.log(results[2][0])
+      if (results[2][0] != undefined) {
+        console.log('Book Already Exists')
+        res.redirect('/books/'+results[2][0].id);
+      } else {
+        newBook = true;
+      }
+      if (results[0][0] == undefined) {
+        console.log('Author doesnt exist')
+        newAuthor = true;
+      } else {
+        req.body.authorid = results[0][0].id
+      }
+      if (results[1][0] == undefined) {
+        console.log('Publisher doesnt exist');
+        newPublisher = true;
+      } else {
+        req.body.publisherid = results[1][0].id
+      }
+      if (newBook) {
+        console.log('Creating new Book');
+        connection.beginTransaction(function(err) {
+          if (err) { 
+            console.log('error starting Transaction');
+            throw err; 
+          }
+          console.log('Starting Transaction');
+          sql1 = 'INSERT INTO authors (`name`) VALUES (?);'
+          inserts = [req.body.authorname];
+          sql1 = mysql.format(sql1, inserts);
+          sql2 = 'INSERT INTO publishers (`name`) VALUES (?);'
+          inserts = [req.body.publishername];
+          sql2 = mysql.format(sql2, inserts);
+          sql3 = 'INSERT INTO books (ISBN, title, authorid, published, publisherid, status, limage) '+
+            'VALUES (?,?,?,?,?,?,?);'
+          var sql= '';
+          if(newAuthor)
+            sql += sql1;
+          if (newPublisher)
+            sql += sql2;
           
-  //         if(sql != ''){
-  //           console.log('Executing Query:'+sql)
-  //           connection.query(sql, function(err,results,fields){
-  //             if(err) {
-  //               connection.rollback(function() {
-  //                     throw err;
-  //                   });
-  //             }
-  //             if (newAuthor && newPublisher) {
-  //               req.body.authorid = results[0].insertId
-  //               req.body.publisherid = results[1].insertId
-  //             } else if(newAuthor){
-  //               console.log('Author Id:'+ results.insertId)
-  //               req.body.authorid = results.insertId
-  //             }
-  //             else
-  //               req.body.publisherid = results.insertId  
-  //             inserts = [req.body.isbn, req.body.title,req.body.authorid,req.body.published,req.body.publisherid,req.body.status,req.body.limage];
-  //             sql3 = mysql.format(sql3, inserts);
-  //             console.log('Executing Query:'+sql3)
-  //             connection.query(sql3, function(err,results,fields){
-  //               if(err) {
-  //                 console.log('Error getting data from table!!!'+err);
-  //               }
-  //               connection.commit(function(err) {
-  //                     if (err) {
-  //                       connection.rollback(function() {
-  //                         throw err;
-  //                       });
-  //                     }
-  //                     console.log('success!');
-  //                     res.redirect('/books/'+results.insertId);
-  //                   });
-  //             });
-  //           });
-  //         } else {
-  //           inserts = [req.body.isbn, req.body.title,req.body.authorid,req.body.published,req.body.publisherid,req.body.status,req.body.limage];
-  //           sql3 = mysql.format(sql3, inserts);
-  //           console.log('Executing Query:'+sql3)
-  //           connection.query(sql3, function(err,results,fields){
-  //             if(err) {
-  //               console.log('Error getting data from table!!!'+err);
-  //             }
-  //             connection.commit(function(err) {
-  //                   if (err) {
-  //                     connection.rollback(function() {
-  //                       throw err;
-  //                     });
-  //                   }
-  //                   console.log('success!');
-  //                   res.redirect('/books/profile/'+results.insertId);
-  //                 });
-  //           });
-  //         }
-  //       });
-  //     }
-  // });
+          if(sql != ''){
+            console.log('Executing Query:'+sql)
+            connection.query(sql, function(err,results,fields){
+              if(err) {
+                connection.rollback(function() {
+                      throw err;
+                    });
+              }
+              if (newAuthor && newPublisher) {
+                req.body.authorid = results[0].insertId
+                req.body.publisherid = results[1].insertId
+              } else if(newAuthor){
+                console.log('Author Id:'+ results.insertId)
+                req.body.authorid = results.insertId
+              }
+              else
+                req.body.publisherid = results.insertId  
+              inserts = [req.body.isbn, req.body.title,req.body.authorid,req.body.published,req.body.publisherid,req.body.status,req.body.limage];
+              sql3 = mysql.format(sql3, inserts);
+              console.log('Executing Query:'+sql3)
+              connection.query(sql3, function(err,results,fields){
+                if(err) {
+                  console.log('Error getting data from table!!!'+err);
+                }
+                connection.commit(function(err) {
+                      if (err) {
+                        connection.rollback(function() {
+                          throw err;
+                        });
+                      }
+                      console.log('success!');
+                      res.redirect('/books/'+results.insertId);
+                    });
+              });
+            });
+          } else {
+            inserts = [req.body.isbn, req.body.title,req.body.authorid,req.body.published,req.body.publisherid,req.body.status,req.body.limage];
+            sql3 = mysql.format(sql3, inserts);
+            console.log('Executing Query:'+sql3)
+            connection.query(sql3, function(err,results,fields){
+              if(err) {
+                console.log('Error getting data from table!!!'+err);
+              }
+              connection.commit(function(err) {
+                    if (err) {
+                      connection.rollback(function() {
+                        throw err;
+                      });
+                    }
+                    console.log('success!');
+                    res.redirect('/books/profile/'+results.insertId);
+                  });
+            });
+          }
+        });
+      }
+  });
 });
 
 router.get('/books/profile/:id', function(req, res, next) {
