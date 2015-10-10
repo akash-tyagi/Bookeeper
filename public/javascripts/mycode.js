@@ -9,7 +9,7 @@ $(document).ready(function() {
         $('li.next a').attr("href", "/books/"+type+"?lastID="+lastID)
         $('li.previous a').attr("href", "/books/"+type+"?firstID="+firstID)
     }
-
+    
     $( "#bookSearch" ).submit(function( event ) {
         if ($("#bookSearch [name=end]").val() != '' && 
             $("#bookSearch [name=start]").val() == ''){
@@ -28,4 +28,26 @@ $(document).ready(function() {
             }
         return true;
     });
+    
+    $( "#createBook" ).submit(function( event ) {
+        var pubYear = $("#createBook [name=published]").val();
+        if ($.isNumeric(pubYear) != true || pubYear.toString().length != 4){
+                alert( "Please enter numeric value for Publishing Year." );
+                return false
+            }
+        return true;
+    });
+    
+     $( "#updateBook" ).submit(function( event ) {
+        var pubYear = $("#updateBook [name=published]").val();
+        if ($.isNumeric(pubYear) != true || pubYear.toString().length != 4){
+                alert( "Please enter numeric value for Publishing Year." );
+                return false
+            }
+        return true;
+    });
+    
+    if($('#status') != []){
+        $('#status').val($('#status').attr('value'));
+    }
 });

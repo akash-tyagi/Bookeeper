@@ -3,8 +3,10 @@
 3. Show author and publisher pages -- done
 4. Improve book search-- done
 
-create book, author and publisher
-5. Author and Publisher search
+create book, author and publisher -- done
+-- db makenames unique - dnoe
+-- create way to show error when sql query fails in all the pages
+
+update book needs to be fixed along with update author and publis
 6. Create indexes on the tables
 7. Generate the query execution time befor and after indexing
-8. Favourite author and publisher

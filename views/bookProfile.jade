@@ -27,10 +27,10 @@ block content
           tr
             td #{book.title}
             td 
-              a(href="/author/#{book.authorid}") #{book.author}
+              a(href="/authors/#{book.authorid}") #{book.author}
             td #{book.published}
             td 
-              a(href="/publisher/#{book.publisherid}") #{book.publisher}
+              a(href="/publishers/#{book.publisherid}") #{book.publisher}
             td
               if book.status == 0
                 |Unread

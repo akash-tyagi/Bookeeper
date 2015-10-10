@@ -10,7 +10,7 @@ block content
     .span2
       div
     .span4
-      form(action='/books/create', method='post')
+      form(action='/books/create', method='post', id='createBook')
         .formgroup
           label Title
           input(type="text" name="title" value = "" required)
@@ -27,7 +27,7 @@ block content
           label ISBN
           input(type="text" name="isbn" value = "" required)
         .formgroup
-          label Cover Image Link
+          label Cover Image Link (jpg url)
           input(type="text" name="limage" value = "")
         .formgroup
           label Status
