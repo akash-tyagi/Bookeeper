@@ -6,3 +6,4 @@ Programming components involved are:
   3. MySQL: Database
   4. Boostrap: CSS
 
+For features available and data used for the project, please read the Project Report available.
