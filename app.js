@@ -6,9 +6,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var books = require('./routes/books');
-// var authors = require('./routes/authors');
-// var publishers = require('./routes/publishers');
-// var user = require('./routes/user');
 
 var app = express();
 app.listen(process.env.PORT, process.env.IP)

@@ -54,7 +54,7 @@ router.post('/books/create', function(req, res, next) {
         connection.beginTransaction(function(err) {
           if (err) { 
             console.log('error starting Transaction');
-            throw err; 
+            res.redirect('/'); 
           }
           console.log('Starting Transaction');
           sql1 = 'INSERT INTO authors (`name`) VALUES (?);'
@@ -76,7 +76,7 @@ router.post('/books/create', function(req, res, next) {
             connection.query(sql, function(err,results,fields){
               if(err) {
                 connection.rollback(function() {
-                      throw err;
+                      res.redirect('/');
                     });
               }
               if (newAuthor && newPublisher) {
@@ -98,7 +98,7 @@ router.post('/books/create', function(req, res, next) {
                 connection.commit(function(err) {
                       if (err) {
                         connection.rollback(function() {
-                          throw err;
+                          res.redirect('/');
                         });
                       }
                       console.log('success!');
@@ -113,11 +113,12 @@ router.post('/books/create', function(req, res, next) {
             connection.query(sql3, function(err,results,fields){
               if(err) {
                 console.log('Error getting data from table!!!'+err);
+                res.redirect('/');
               }
               connection.commit(function(err) {
                     if (err) {
                       connection.rollback(function() {
-                        throw err;
+                        res.redirect('/');
                       });
                     }
                     console.log('success!');
@@ -141,6 +142,7 @@ router.get('/books/profile/:id', function(req, res, next) {
   connection.query(sql, function(err,results,fields){
       if(err) {
         console.log('Error getting data from table!!!');
+        res.redirect('/');
       }
       console.log(results[0])
       res.render('bookProfile',{book:results[0]})
@@ -180,6 +182,7 @@ router.post('/books/search', function(req, res, next) {
   connection.query(sql, function(err,results,fields){
       if(err) {
         console.log('Error getting data from table!!!'+err);
+        res.redirect('/');
       }
     res.render('readBooks', {title:'Search Results', books:results});
   });
@@ -193,7 +196,7 @@ router.get('/books/reading', function(req, res, next) {
   connection.query(sql, function(err,results, fields){
     if(err){
       console.log('Error getting data from table!!!'+err)
-      throw err;
+      res.redirect('/');
     }
     res.render('readBooks',{title:'Books Currenlty Reading',
       books:results, read:true});
@@ -209,7 +212,7 @@ router.get('/books/read', function(req, res, next) {
   connection.query(sql, function(err,results, fields){
     if(err){
       console.log('Error getting data from table!!!'+err)
-      throw err;
+      res.redirect('/');
     }
     res.render('readBooks',{title:'Books Read So Far',
       books:results, read:true});
@@ -234,6 +237,7 @@ router.get('/books/unread', function(req, res, next) {
   connection.query(query, function(err,results, fields){
     if(err){
       console.log('Error getting data from table!!!');
+      res.redirect('/');
     }
     res.render('readBooks',{title:'Books To Be Read', 
       books:results, read:false});
@@ -252,6 +256,7 @@ router.get('/books/:id/update', function(req, res, next) {
   connection.query(sql, function(err,results,fields){
       if(err) {
         console.log('Error getting data from table!!!');
+        res.redirect('/');
       }
       res.render('updateBook',{book:results[0]})
     })
@@ -262,7 +267,7 @@ router.post('/books/:id/update', function(req, res, next) {
   connection.beginTransaction(function(err) {
     if (err) { 
       console.log('error starting Transaction');
-      throw err; 
+      res.redirect('/');
     }
     var sql = "SELECT * FROM books where id=?;";
     var inserts = [req.params.id];
@@ -272,7 +277,7 @@ router.post('/books/:id/update', function(req, res, next) {
     connection.query(sql, function(err,results,fields){
       if(err) {
         connection.rollback(function() {
-              throw err;
+              res.redirect('/');
             });
       }
       
@@ -292,11 +297,12 @@ router.post('/books/:id/update', function(req, res, next) {
       connection.query(sql1+sql2+sql3, function(err,results,fields){
         if(err) {
           console.log('Error getting data from table!!!'+err);
+          res.redirect('/');
         }
         connection.commit(function(err) {
           if (err) {
             connection.rollback(function() {
-              throw err;
+              res.redirect('/');
             });
           }
           console.log('success!');
@@ -316,6 +322,7 @@ router.post('/books/:id/delete', function(req, res, next) {
   connection.query(sql, function(err,results,fields){
       if(err) {
         console.log('Error getting data from table!!!'+err);
+        res.redirect('/');
       }
       res.redirect('/books/search');
     })
@@ -332,6 +339,7 @@ router.get('/publishers/:id', function(req, res, next) {
     connection.query(sql1 + sql2, function(err,results,fields){
       if(err) {
         console.log('Error getting data from table!!!');
+        res.redirect('/');
       }
       console.log(results[0])
       console.log(results[1])
@@ -350,23 +358,13 @@ router.get('/authors/:id', function(req, res, next) {
     connection.query(sql1 + sql2, function(err,results,fields){
       if(err) {
         console.log('Error getting data from table!!!');
+        res.redirect('/');
       }
       console.log(results[0])
       console.log(results[1])
       res.render('authors/profile',{author:results[0][0], books:results[1]});
     })
 });
-
-// router.get('/', function(req, res, next) {
-//     var sql1 = "SELECT * FROM authors;";
-//     connection.query(sql1, function(err,results,fields){
-//       if(err) {
-//         console.log('Error getting data from table!!!');
-//       }
-//       console.log('test')
-//       res.render('authors/authors',{authors:results[0]});
-//     })
-// });
 
 router.get('/', function(req, res, next) {
   var sql1 = "Select * from user;";
@@ -377,6 +375,7 @@ router.get('/', function(req, res, next) {
   connection.query(sql1+sql2+sql3+sql4, function(err,results,fields){
     if(err) {
         console.log('Error getting data from table!!!'+err);
+        res.redirect('/');
       }
     console.log(results)
     res.render('user/profile', { user: results[0][0], totalRead:results[3][0]['count(*)'],
@@ -389,6 +388,7 @@ router.get('/update', function(req, res, next) {
     function(err,results,fields){
       if(err) {
         console.log('Error getting data from table!!!');
+        res.redirect('/');
       }
       res.render('user/updateProfile',{user:results[0]})
     })
@@ -402,6 +402,7 @@ router.post('/update', function(req, res, next) {
   connection.query(sql, function(err,results,fields){
       if(err) {
         console.log('Error getting data from table!!!'+err);
+        res.redirect('/');
       }
     res.redirect('/');
   });
